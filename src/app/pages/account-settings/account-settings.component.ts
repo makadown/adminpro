@@ -1,6 +1,7 @@
 import { Component, OnInit,  ElementRef } from '@angular/core';
 import { SelectMultipleControlValueAccessor } from '@angular/forms';
-import { SettingsService } from '../../services/settings.service';
+import { SettingsService } from '../../services/service.index';
+
 
 @Component({
   selector: 'app-account-settings',

@@ -18,7 +18,7 @@ export class SettingsService {
 
   cargarAjustes() {
     if (localStorage.getItem('ajustes')) {
-          this.ajustes = JSON.parse(localStorage.getItem('ajustes'));          
+          this.ajustes = JSON.parse(localStorage.getItem('ajustes'));
           // console.log('Cargando ajustes');
     } else {
       console.log('Usando valores por defecto');

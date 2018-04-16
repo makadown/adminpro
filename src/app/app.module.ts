@@ -6,10 +6,12 @@ import { APP_ROUTES } from './app.routes';
 
 // Modulos
 import { PagesModule } from './pages/pages.module';
+
+// Temporal
 import { FormsModule } from '@angular/forms';
 
 // Servicios
-import { SettingsService } from './services/settings.service';
+import { ServiceModule } from './services/service.module';
 
 // Componentes
 import { AppComponent } from './app.component';
@@ -26,9 +28,10 @@ import { RegisterComponent } from './login/register.component';
     BrowserModule,
     PagesModule,
     APP_ROUTES,
-    FormsModule
+    FormsModule,
+    ServiceModule
   ],
-  providers: [SettingsService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

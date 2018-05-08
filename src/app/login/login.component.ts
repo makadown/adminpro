@@ -53,9 +53,9 @@ export class LoginComponent implements OnInit {
       // const profile = googleUser.getBasicProfile();
       const token = googleUser.getAuthResponse().id_token;
       // console.log(token);
-      this._usuarioService.loginGoogle(token)
-                    .subscribe( () => this.router.navigate(['/dashboard']) );
-                /*.subscribe( () => window.location.href = '#/dashboard' );*/
+      /*this._usuarioService.loginGoogle(token)
+                    .subscribe( () => this.router.navigate(['/dashboard']) );*/
+      this._usuarioService.loginGoogle(token).subscribe( () => window.location.href = '#/dashboard' );
                 /* Esto de arriba es una chicanada para evitar un bug del template del dashboard */
 
     } );

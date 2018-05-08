@@ -7,10 +7,13 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 
+// Pipes Modulo
+import { PipesModule } from './../pipes/pipes.module';
+
 
 @NgModule(
 {
-    imports: [RouterModule, CommonModule],
+    imports: [RouterModule, CommonModule, PipesModule],
     declarations: [BreadcrumbsComponent, HeaderComponent, NopagefoundComponent, SidebarComponent],
     exports : [BreadcrumbsComponent, HeaderComponent, NopagefoundComponent, SidebarComponent]
 })

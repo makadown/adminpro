@@ -20,6 +20,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { ProfileComponent } from './profile/profile.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
 declarations: [
@@ -39,6 +40,7 @@ exports: [
     ProgressComponent,
     Graficas1Component
 ],
-imports: [ SharedModule, PAGES_ROUTES, FormsModule, ChartsModule, PipesModule ]
+imports: [ CommonModule, SharedModule, PAGES_ROUTES, FormsModule,
+    ChartsModule, PipesModule ]
 })
 export class PagesModule {}

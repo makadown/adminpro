@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { URL_SERVICIOS } from '../../config/config';
 import 'rxjs/add/operator/map';
 import { Router } from '@angular/router';
+import { SubirArchivoService } from '../subir-archivo/subir-archivo.service';
 
 @Injectable()
 export class UsuarioService {
@@ -12,9 +13,10 @@ export class UsuarioService {
   token: string;
 
   constructor( public http: HttpClient ,
-    public router: Router ) {
+    public router: Router,
+    public _subirArchivoService: SubirArchivoService ) {
     this.cargarStorage();
-    console.log('Servicio de usuario listo');
+    // console.log('Servicio de usuario listo');
   }
 
   estaLogueado() {
@@ -61,6 +63,14 @@ export class UsuarioService {
     this.token = resp.token;
   }
 
+  actualizarStorage(id: string, token: string, usuario: Usuario) {
+    localStorage.setItem('id', id );
+    localStorage.setItem('token', token );
+    localStorage.setItem('usuario', JSON.stringify(usuario) );
+    this.usuario = usuario;
+    this.token = token;
+  }
+
   login(usuario: Usuario, recuerdame: boolean) {
 
     if (recuerdame) {
@@ -85,6 +95,34 @@ export class UsuarioService {
                 this.guardarStorage(resp);
                 return true;
                });
+  }
+
+  actualizarUsuario( usuario: Usuario ) {
+
+    const url = URL_SERVICIOS + '/usuario/' + usuario._id +
+          '?token=' + this.token;
+
+    return this.http.put(url, usuario)
+               .map((resp: any) => {
+
+                const usuarioDB: Usuario = resp.usuario;
+                this.actualizarStorage( usuarioDB._id, this.token, usuarioDB);
+                swal('Usuario actualizado', usuario.nombre, 'success');
+
+                return true;
+               });
+  }
+
+  cambiarImagen(archivo: File, id: string) {
+    this._subirArchivoService.subirArchivo(archivo, 'usuarios', id)
+    .then( (resp: any ) => {
+      this.usuario.img = resp.usuarioActualizado.img;
+      swal('Imagen de usuario actualizada', this.usuario.nombre, 'success');
+      this.actualizarStorage(this.usuario._id, this.token, this.usuario);
+    })
+    .catch(resp => {
+      console.log( resp );
+    });
   }
 
 }

@@ -6,6 +6,7 @@ import { SweetAlert } from 'sweetalert/typings/core';
 import { UsuarioService } from '../services/service.index';
 import { Usuario } from '../models/usuario.model';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Rx';
 
 const swal: SweetAlert = _swal as any;
 
@@ -63,24 +64,29 @@ https://sweetalert.js.org/
 */
   registrarUsuario() {
 
-    if ( this.forma.invalid  ) {
-      return;
-    }
-
     if ( !this.forma.value.condiciones ) {
       swal('Importante', 'Debe aceptar las condiciones.', 'warning');
+    } else {
+
+      if ( this.forma.invalid  ) {
+      return;
     }
 
     const usuario = new Usuario(this.forma.value.nombre,
                               this.forma.value.correo,
                               this.forma.value.password
-       );
+       ); 
 
-       this._usuarioService.crearUsuario(usuario)
-       .subscribe( resp => {
+    this._usuarioService.crearUsuario(usuario)
+      .catch(err => {
+        swal('Error al crear usuario', 'Intente con otro correo.', 'warning');
+        return Observable.empty();
+    })
+      .subscribe( resp => {
               // console.log(resp);
               this.router.navigate(['/login']);
        });
+    }
   }
 
 }

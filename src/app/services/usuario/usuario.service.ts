@@ -1,7 +1,7 @@
+import { URL_SERVICIOS } from './../../config/config';
 import { Injectable } from '@angular/core';
 import { Usuario } from '../../models/usuario.model';
 import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIOS } from '../../config/config';
 import 'rxjs/add/operator/map';
 import { Router } from '@angular/router';
 import { SubirArchivoService } from '../subir-archivo/subir-archivo.service';
@@ -105,8 +105,12 @@ export class UsuarioService {
     return this.http.put(url, usuario)
                .map((resp: any) => {
 
-                const usuarioDB: Usuario = resp.usuario;
-                this.actualizarStorage( usuarioDB._id, this.token, usuarioDB);
+                if (usuario._id === this.usuario._id) {
+                  /* Solo si soy yo mismo, el usuario conectado */
+                  const usuarioDB: Usuario = resp.usuario;
+                  this.actualizarStorage( usuarioDB._id, this.token, usuarioDB);
+                }
+
                 swal('Usuario actualizado', usuario.nombre, 'success');
 
                 return true;
@@ -123,6 +127,30 @@ export class UsuarioService {
     .catch(resp => {
       console.log( resp );
     });
+  }
+
+  cargarUsuarios( desde: number = 0  ) {
+    const url = URL_SERVICIOS + '/usuario?desde=' +  desde;
+    return this.http.get(url);
+  }
+
+  buscarUsuarios( termino: string) {
+
+    /*TODO: meter funcionalidad de paginacion */
+    const url = URL_SERVICIOS + '/busqueda/coleccion/usuarios/' +  termino;
+    return this.http.get(url)
+                    .map( (resp: any) => resp.usuarios );
+  }
+
+  borrarUsuario(id: string) {
+    const url = URL_SERVICIOS + '/usuario/' + id +
+          '?token=' + this.token;
+
+    return this.http.delete(url)
+    .map((resp: any) => {
+      swal('Listo', 'Usuario eliminado correctamente', 'success');
+      return true;
+     });
   }
 
 }

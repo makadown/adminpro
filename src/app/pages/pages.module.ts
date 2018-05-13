@@ -1,4 +1,3 @@
-
 import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -21,6 +20,8 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { ProfileComponent } from './profile/profile.component';
 import { CommonModule } from '@angular/common';
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { ModalUploadComponent } from './../components/modal-upload/modal-upload.component';
 
 @NgModule({
 declarations: [
@@ -33,7 +34,9 @@ declarations: [
     AccountSettingsComponent,
     PromesasComponent,
     RxjsComponent,
-    ProfileComponent
+    ProfileComponent,
+    UsuariosComponent,
+    ModalUploadComponent
 ],
 exports: [
     DashboardComponent,

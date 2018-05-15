@@ -1,7 +1,7 @@
-import { ModalUploadService } from './../../components/modal-upload/modal-upload.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Usuario } from '../../models/usuario.model';
+import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../services/service.index';
+import { ModalUploadService } from './../../components/modal-upload/modal-upload.service';
+import { Usuario } from '../../models/usuario.model';
 
 declare var swal: any;
 
@@ -10,7 +10,7 @@ declare var swal: any;
   templateUrl: './usuarios.component.html',
   styles: []
 })
-export class UsuariosComponent implements OnInit, OnDestroy {
+export class UsuariosComponent implements OnInit {
 
   usuarios: Usuario[] = [];
   desde: number = 0;
@@ -103,11 +103,4 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   mostrarModal(id: string) {
     this._modalUploadService.mostrarModal('usuarios', id);
   }
-
-  ngOnDestroy(): void {
-    // Called once, before the instance is destroyed.
-    // Add 'implements OnDestroy' to the class.
-    this._modalUploadService.notificacion.unsubscribe();
-  }
-
 }

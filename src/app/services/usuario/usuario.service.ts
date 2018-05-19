@@ -11,6 +11,7 @@ export class UsuarioService {
 
   usuario: Usuario;
   token: string;
+  menu: any[] = [];
 
   constructor( public http: HttpClient ,
     public router: Router,
@@ -29,6 +30,7 @@ export class UsuarioService {
     localStorage.removeItem('id');
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');
+    localStorage.removeItem('menu');
 
     // El clear borra todas las configuraciones sobre este server. Usar con cuidado
     // localStorage.clear();
@@ -49,9 +51,11 @@ export class UsuarioService {
       if (localStorage.getItem('token')) {
         this.token = localStorage.getItem('token');
         this.usuario = JSON.parse( localStorage.getItem('usuario') ) ;
+        this.menu = JSON.parse( localStorage.getItem('menu') ) ;
       } else {
         this.token = '';
         this.usuario = null;
+        this.menu = [];
       }
   }
 
@@ -59,16 +63,20 @@ export class UsuarioService {
     localStorage.setItem('id', resp.id );
     localStorage.setItem('token', resp.token );
     localStorage.setItem('usuario', JSON.stringify(resp.usuario) );
+    localStorage.setItem('menu', JSON.stringify(resp.menu) );
     this.usuario = resp.usuario;
     this.token = resp.token;
+    this.menu = resp.menu;
   }
 
-  actualizarStorage(id: string, token: string, usuario: Usuario) {
+  actualizarStorage(id: string, token: string, usuario: Usuario, menu: any) {
     localStorage.setItem('id', id );
     localStorage.setItem('token', token );
     localStorage.setItem('usuario', JSON.stringify(usuario) );
+    localStorage.setItem('menu', JSON.stringify(menu) );
     this.usuario = usuario;
     this.token = token;
+    this.menu = menu;
   }
 
   login(usuario: Usuario, recuerdame: boolean) {
@@ -108,7 +116,7 @@ export class UsuarioService {
                 if (usuario._id === this.usuario._id) {
                   /* Solo si soy yo mismo, el usuario conectado */
                   const usuarioDB: Usuario = resp.usuario;
-                  this.actualizarStorage( usuarioDB._id, this.token, usuarioDB);
+                  this.actualizarStorage( usuarioDB._id, this.token, usuarioDB, this.menu);
                 }
 
                 swal('Usuario actualizado', usuario.nombre, 'success');
@@ -122,7 +130,7 @@ export class UsuarioService {
     .then( (resp: any ) => {
       this.usuario.img = resp.usuarioActualizado.img;
       swal('Imagen de usuario actualizada', this.usuario.nombre, 'success');
-      this.actualizarStorage(this.usuario._id, this.token, this.usuario);
+      this.actualizarStorage(this.usuario._id, this.token, this.usuario, this.menu);
     })
     .catch(resp => {
       console.log( resp );

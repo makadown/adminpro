@@ -77,12 +77,7 @@ https://sweetalert.js.org/
                               this.forma.value.password
        ); 
 
-    this._usuarioService.crearUsuario(usuario)
-      .catch(err => {
-        swal('Error al crear usuario', 'Intente con otro correo.', 'warning');
-        return Observable.empty();
-    })
-      .subscribe( resp => {
+    this._usuarioService.crearUsuario(usuario).subscribe( resp => {
               // console.log(resp);
               this.router.navigate(['/login']);
        });

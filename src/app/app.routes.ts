@@ -1,3 +1,4 @@
+import { LoginGuardGuard } from './services/guards/login-guard.guard';
 import { PagesComponent } from './pages/pages.component';
 import { RouterModule, Routes} from '@angular/router';
 
@@ -8,6 +9,10 @@ import { RegisterComponent } from './login/register.component';
 const appRoutes: Routes = [
     { path : 'login' , component: LoginComponent },
     { path : 'register' , component: RegisterComponent },
+    { path : '',
+      component: PagesComponent,
+      canActivate: [ LoginGuardGuard ],
+      loadChildren : './pages/pages.module#PagesModule' },
     { path : '**' , component: NopagefoundComponent }
 ];
 

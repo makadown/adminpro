@@ -121,11 +121,12 @@ export class UsuarioService {
 
   loginGoogle(token: string) {
 
-    // console.log('Enviando token '  + token );
+    console.log('Enviando token '  + token );
     const url = URL_SERVICIOS + '/login/google';
     /* Indispensable mandar el token entre {} */
     return this.http.post(url , { token } )
               .map( (resp: any) => {
+                console.log(resp);
                 this.guardarStorage(resp);
                 return true;
                });

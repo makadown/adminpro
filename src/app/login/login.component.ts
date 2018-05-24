@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
     gapi.load('auth2', () => {
       this.auth2 = gapi.auth2.init({
          client_id : '501471606436-8a4bkqck9pt659bltrijac6t8sc1nqf0.apps.googleusercontent.com',
-        cookiepolicy : 'singe_host_origin',
+        /*cookiepolicy : 'singe_host_origin',*/
         scope: 'profile email'
       });
 
@@ -50,13 +50,16 @@ export class LoginComponent implements OnInit {
   attachSignin( element ) {
     this.auth2.attachClickHandler(element, {}, (googleUser) => {
 
-      // const profile = googleUser.getBasicProfile();
+      console.log('Entrando al profail');
+      const profile = googleUser.getBasicProfile();
       const token = googleUser.getAuthResponse().id_token;
-      // console.log(token);
-      /*this._usuarioService.loginGoogle(token)
-                    .subscribe( () => this.router.navigate(['/dashboard']) );*/
-      this._usuarioService.loginGoogle(token).subscribe( () => window.location.href = '#/dashboard' );
-                /* Esto de arriba es una chicanada para evitar un bug del template del dashboard */
+
+      console.log(profile);
+      this._usuarioService.loginGoogle(token)
+                    .subscribe( () => this.router.navigate(['/dashboard']) );
+      /* this._usuarioService.loginGoogle(token).subscribe( () =>
+                 window.location.href = '#/dashboard' ); */
+    /* Esto de arriba es una chicanada para evitar un bug del template del dashboard */
 
     } );
   }

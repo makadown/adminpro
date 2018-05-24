@@ -126,7 +126,7 @@ export class UsuarioService {
     /* Indispensable mandar el token entre {} */
     return this.http.post(url , { token } )
               .map( (resp: any) => {
-                console.log(resp);
+                // console.log(resp);
                 this.guardarStorage(resp);
                 return true;
                });

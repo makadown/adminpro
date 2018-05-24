@@ -22,6 +22,22 @@ export class UsuarioService {
     // console.log('Servicio de usuario listo');
   }
 
+  renuevatoken() {
+    const url = URL_SERVICIOS + '/login/renuevatoken?token=' + this.token;
+
+    return this.http.get(url)
+              .map( (resp: any) => {
+                this.guardarStorage(resp);
+                console.log('Token renovado.');
+                return true;
+               })
+               .catch( err => {
+                 this.router.navigate(['/login']);
+                 swal('Error al renovar token', 'Por favor inicie sesión nuevamente', 'error');
+                    return Observable.throw(err);
+               });
+  }
+
   estaLogueado() {
     return (this.token.length > 5 ) ? true : false;
   }

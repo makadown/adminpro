@@ -50,15 +50,22 @@ export class LoginComponent implements OnInit {
   attachSignin( element ) {
     this.auth2.attachClickHandler(element, {}, (googleUser) => {
 
-      console.log('Entrando al profail');
+      // console.log('Entrando al profail');
       const profile = googleUser.getBasicProfile();
       const token = googleUser.getAuthResponse().id_token;
 
-      console.log(profile);
-      this._usuarioService.loginGoogle(token)
-                    .subscribe( () => this.router.navigate(['/dashboard']) );
+     // console.log(profile);
+     /* this._usuarioService.loginGoogle(token)
+                    .subscribe( () => this.router.navigate(['/dashboard']) ); */
+                    /* En produccion y dev esto se buguea */
+
       /* this._usuarioService.loginGoogle(token).subscribe( () =>
                  window.location.href = '#/dashboard' ); */
+                 /* En produccion no jala y en dev si funciona */
+      this._usuarioService.loginGoogle(token).subscribe( () =>
+                 window.location.href = 'https://makadown.github.io/adminpro/#/dashboard' );
+                 /* Solo para Githubpages  */
+                 
     /* Esto de arriba es una chicanada para evitar un bug del template del dashboard */
 
     } );
